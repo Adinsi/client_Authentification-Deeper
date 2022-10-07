@@ -1,0 +1,58 @@
+
+                        // @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+                        @font-face {
+                            font-family: Montserrat;
+                            src: url("./static/Montserrat-Regular.ttf");
+                        }
+            
+                        @font-face {
+                            font-family: Montserrat-SemiBold;
+                            src: url("./static/Montserrat-SemiBold.ttf");
+                        }
+            
+                        @font-face {
+                            font-family: Montserrat-Bold;
+                            src: url("./static/Montserrat-Bold.ttf");
+                        }
+            
+                        @font-face {
+                            font-family: Montserrat-Medium;
+                            src: url("./static/Montserrat-Medium.ttf");
+                        }
+            
+                        @font-face {
+                            font-family: Montserrat-ExtraBold;
+                            src: url("./static/Montserrat-ExtraBold.ttf");
+                        }
+            
+                        $color1: #fff;
+                        $color2: #000;
+                        $color3: #0179c5;
+                         ;
+                        $color4: #f6be00;
+                        $color5: whitesmoke;
+                        $color6: #ddf0f4;
+                        $color7: gray;
+                        $color8: rgba(23, 162, 184, 1);
+                        $color9: #212529;
+                        $color10: #F5F5F5;
+                        $color11: #383838;
+                        $color12: #0a3468;
+            
+            
+                        * {
+                            margin: 0;
+                            padding: 0;
+                            box-sizing: border-box;
+                            font-family: 'Montserrat';
+                            scroll-behavior: smooth;
+                        }
+                        html{
+                            font-family: 'Montserrat' !important;
+                        }
+            
+                        ul {
+                            margin: 0;
+                            padding: 0;
+                            list-style: none;
+                        }

@@ -1,0 +1,536 @@
+@import '../seetings.scss';
+
+//   Phone CSS
+@media screen and (min-width: 320px) and (max-width: 768px) {
+    nav {
+            width: 100vw;
+            height: 85px;
+            background-color: $color3;
+            // border-bottom: 0.1rem solid $color5;
+            position: fixed;
+            z-index: 3;
+    
+            .container {
+    
+                width: 100vw;
+                height: 85px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                align-content: center;
+    
+                .logo {
+                    margin: 5px;
+                    cursor: pointer;
+    
+                    z-index: 3;
+    
+                    img {
+                       width: 70px;
+                       border-radius: 50%;
+                    }
+                }
+    
+                .links {
+                    .menu {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        align-content: center;
+                        position: relative;
+    
+    
+    
+    
+                        li {
+    
+    
+                            a {
+                                text-decoration: none;
+                                text-transform: uppercase;
+                                color: $color1;
+                                font-family: 'Montserrat', sans-serif !important;
+                                font-weight: 600;
+                                font-size: 20px;
+                                font-style: normal;
+                                line-height: 27px;
+                                margin-right: 20px;
+                            }
+    
+                            i {
+                                margin-left: 10px;
+                                // transition: 3s ease all;
+                            }
+    
+                        }
+    
+                        .langue {
+                            z-index: 2;
+                            position: fixed;
+                            top: 100px;
+                            right: 20px;
+    
+                            a {
+                                display: block;
+                                text-decoration: none;
+                                text-transform: uppercase;
+                                color: $color2;
+                                font-family: 'Montserrat', sans-serif !important;
+                                font-weight: 600;
+                                font-size: 20px;
+                                font-style: normal;
+                                line-height: 27px;
+                                padding: 15px 50px;
+                                background-color: $color1;
+                                border-bottom: 1px solid $color5;
+    
+                                &:hover {
+                                    display: block;
+                                    background-color: $color5;
+                                }
+                            }
+    
+                        }
+    
+                    }
+    
+    
+                }
+    
+                .MenuBurger {
+                    display: none;
+                }
+    
+            }
+    
+        }
+
+}
+
+//    Tablette CSS
+@media screen and (min-width: 769px) and (max-width: 1026px) {
+    nav {
+            width: 100vw;
+            height: 85px;
+            background-color: $color3;
+            // border-bottom: 0.1rem solid $color5;
+            position: fixed;
+            z-index: 3;
+    
+            .container {
+    
+                width: 100vw;
+                height: 85px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                align-content: center;
+    
+                .logo {
+                    margin: 5px;
+                    cursor: pointer;
+    
+                    z-index: 3;
+    
+                    img {
+                        width: 70px;
+                            border-radius: 50%;
+                    }
+                }
+    
+                .links {
+                    .menu {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        align-content: center;
+                        position: relative;
+    
+    
+    
+    
+                        li {
+    
+    
+                            a {
+                                text-decoration: none;
+                                text-transform: uppercase;
+                                color: $color1;
+                                font-family: 'Montserrat', sans-serif !important;
+                                font-weight: 600;
+                                font-size: 20px;
+                                font-style: normal;
+                                line-height: 27px;
+                                margin-right: 20px;
+                            }
+    
+                            i {
+                                margin-left: 10px;
+                                // transition: 3s ease all;
+                            }
+    
+                        }
+    
+                        .langue {
+                            z-index: 2;
+                            position: fixed;
+                            top: 100px;
+                            right: 20px;
+    
+                            a {
+                                display: block;
+                                text-decoration: none;
+                                text-transform: uppercase;
+                                color: $color2;
+                                font-family: 'Montserrat', sans-serif !important;
+                                font-weight: 600;
+                                font-size: 20px;
+                                font-style: normal;
+                                line-height: 27px;
+                                padding: 15px 50px;
+                                background-color: $color1;
+                                border-bottom: 1px solid $color5;
+    
+                                &:hover {
+                                    display: block;
+                                    background-color: $color5;
+                                }
+                            }
+    
+                        }
+    
+                    }
+    
+    
+                }
+    
+                .MenuBurger {
+                    display: none;
+                }
+    
+            }
+    
+        }
+}
+
+//    Desktop CSS
+@media screen and (min-width: 1027px) and (max-width: 1280px) {
+    nav {
+        width: 100vw;
+        height: 85px;
+        background-color: $color3;
+        // border-bottom: 0.1rem solid $color5;
+        position: fixed;
+        z-index: 3;
+
+        .container {
+
+            width: 100vw;
+            height: 85px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            align-content: center;
+
+            .logo {
+                margin: 5px;
+                cursor: pointer;
+
+                z-index: 3;
+
+                img {
+                width: 80px;
+                    border-radius: 50%;
+                }
+            }
+
+            .links {
+                .menu {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    align-content: center;
+                    position: relative;
+
+
+
+
+                    li {
+
+
+                        a {
+                            text-decoration: none;
+                            text-transform: uppercase;
+                            color: $color1;
+                            font-family: 'Montserrat', sans-serif !important;
+                            font-weight: 600;
+                            font-size: 20px;
+                            font-style: normal;
+                            line-height: 27px;
+                            margin-right: 20px;
+                        }
+
+                        i {
+                            margin-left: 10px;
+                            // transition: 3s ease all;
+                        }
+
+                    }
+
+                    .langue {
+                        z-index: 2;
+                        position: fixed;
+                        top: 100px;
+                        right: 20px;
+
+                        a {
+                            display: block;
+                            text-decoration: none;
+                            text-transform: uppercase;
+                            color: $color2;
+                            font-family: 'Montserrat', sans-serif !important;
+                            font-weight: 600;
+                            font-size: 20px;
+                            font-style: normal;
+                            line-height: 27px;
+                            padding: 15px 50px;
+                            background-color: $color1;
+                            border-bottom: 1px solid $color5;
+
+                            &:hover {
+                                display: block;
+                                background-color: $color5;
+                            }
+                        }
+
+                    }
+
+                }
+
+
+            }
+
+            .MenuBurger {
+                display: none;
+            }
+
+        }
+
+    }
+}
+
+//  Medium Screen
+@media screen and (min-width: 1281px) and (max-width: 1600px) {
+    nav {
+        width: 100vw;
+        height: 90px;
+        background-color: $color3;
+        // border-bottom: 0.1rem solid $color5;
+        position: fixed;
+        z-index: 3;
+
+        .container {
+
+            width: 100vw;
+            height: 90px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            align-content: center;
+
+            .logo {
+                margin: 5px;
+                cursor: pointer;
+
+                z-index: 3;
+
+                img {
+                    width: 80px;
+                        border-radius: 50%;
+                }
+            }
+
+            .links {
+                .menu {
+                    display: flex;
+                    justify-content: center;
+                    align-items: flex-end;
+                    align-content: flex-end;
+                    position: relative;
+                   left: 100%;
+
+
+
+
+                    li {
+
+
+                        a {
+                            text-decoration: none;
+                            text-transform: uppercase;
+                            color: $color1;
+                            font-family: 'Montserrat-Medium';
+                            // font-weight: 00;
+                            font-size: 18px;
+                            font-style: normal;
+                            line-height: 27px;
+                            margin-right: 20px;
+                            // letter-spacing: 2px;
+                        }
+
+                        i {
+                            margin-left: 10px;
+                            // transition: 3s ease all;
+                        }
+
+                    }
+
+                    .langue {
+                        z-index: 2;
+                        position: fixed;
+                        top: 100px;
+                        right: 20px;
+
+                        a {
+                            display: block;
+                            text-decoration: none;
+                            text-transform: uppercase;
+                            color: $color2;
+                            font-family: 'Montserrat', sans-serif !important;
+                            font-weight: 600;
+                            font-size: 20px;
+                            font-style: normal;
+                            line-height: 27px;
+                            padding: 15px 50px;
+                            background-color: $color1;
+                            border-bottom: 1px solid $color5;
+
+                            &:hover {
+                                display: block;
+                                background-color: $color5;
+                            }
+                        }
+
+                    }
+
+                }
+
+
+            }
+
+            .MenuBurger {
+                display: none;
+            }
+
+        }
+
+    }
+}
+
+// Large Desktop
+@media screen and (min-width:1601px) and (max-width:2500px) {
+nav {
+        width: 100vw;
+        height: 90px;
+        background-color: $color3;
+        // border-bottom: 0.1rem solid $color5;
+        position: fixed;
+        z-index: 3;
+
+        .container {
+
+            width: 100vw;
+            height: 90px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            align-content: center;
+
+            .logo {
+                margin: 5px;
+                cursor: pointer;
+
+                z-index: 3;
+
+                img {
+                    width: 80px;
+                    border-radius: 50%;
+                }
+            }
+
+            .links {
+                .menu {
+                    display: flex;
+                    justify-content: center;
+                    align-items: flex-end;
+                    align-content: flex-end;
+                    position: relative;
+                    left: 100%;
+
+
+
+
+                    li {
+
+
+                        a {
+                            text-decoration: none;
+                            text-transform: uppercase;
+                            color: $color1;
+                            font-family: 'Montserrat-Medium';
+                            // font-weight: 00;
+                            font-size: 18px;
+                            font-style: normal;
+                            line-height: 27px;
+                            margin-right: 20px;
+                            // letter-spacing: 2px;
+                        }
+
+                        i {
+                            margin-left: 10px;
+                            // transition: 3s ease all;
+                        }
+
+                    }
+
+                    .langue {
+                        z-index: 2;
+                        position: fixed;
+                        top: 100px;
+                        right: 20px;
+
+                        a {
+                            display: block;
+                            text-decoration: none;
+                            text-transform: uppercase;
+                            color: $color2;
+                            font-family: 'Montserrat', sans-serif !important;
+                            font-weight: 600;
+                            font-size: 20px;
+                            font-style: normal;
+                            line-height: 27px;
+                            padding: 15px 50px;
+                            background-color: $color1;
+                            border-bottom: 1px solid $color5;
+
+                            &:hover {
+                                display: block;
+                                background-color: $color5;
+                            }
+                        }
+
+                    }
+
+                }
+
+
+            }
+
+            .MenuBurger {
+                display: none;
+            }
+
+        }
+
+    }
+}

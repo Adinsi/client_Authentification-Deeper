@@ -1,0 +1,39 @@
+.formulaire {
+    background-image: linear-gradient(-225deg, #0179c5 0%, #029664 100%);
+    background-image: linear-gradient(to top, #135883 0%, #14ae7a 100%);
+
+    // background-attachment: fixed;
+    // background-repeat: no-repeat;
+    // background-image: url('../../../public/assets/logo.jpg');
+
+    // background-size: cover;
+    // // background-position: center;
+
+    font-family: 'Vibur', cursive;
+    /*   the main font */
+    font-family: 'Abel', sans-serif;
+    opacity: .95;
+    width: 100%;
+        // background-color: whitesmoke;
+   .formulaireSignInSignUp{
+    width: 100%;
+    overflow-x: hidden;
+    height: 100vh;
+   }
+    .button{
+        
+        text-align: center;
+        // display: flex;
+        // align-items: center;
+        // align-content: center;
+        // justify-content: center;
+        margin: auto;
+       
+        button{
+            margin-right: 15px;
+            background: #B8F2E6;
+            width: auto;
+        }
+    }
+    /* background-image: linear-gradient(to top, #d9afd9 0%, #97d9e1 100%); */
+}
