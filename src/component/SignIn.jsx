@@ -9,9 +9,8 @@ const SignIn = () => {
   const history = useNavigate();
     const [email, Setemail] = useState('');
   const [password, Setpassword] = useState('');
-
-
-    const [eye, seteye] = useState(true);
+  const [eye, seteye] = useState(true);
+  const Emailerror =document.querySelector('.email')
   
   const Eyeclick = () => {
     seteye(!eye);
@@ -33,7 +32,16 @@ const SignIn = () => {
    email,
    password
               }
-            ).catch(error=> console.log(error))
+ ).catch(error => {
+   console.log(error.response.data.message)
+     ;
+  if (error.response.data.message.includes("Le mot de pass ou l'email est invalide")) {
+            Emailerror.innerHTML= error.response.data.message
+   }
+    if (error.response.data.message.includes("Cet email n'existe pas, Inscrivez vous")) {
+            Emailerror.innerHTML= error.response.data.message
+             }
+            })
                 
     const data = await res.data;
     return data;
@@ -70,13 +78,13 @@ sendRquest().then(() => history('/profil') )
      
       
          <span className="input-item">
-           <i className="fa fa-user-circle"></i>
+           <i className="fa-sharp fa-solid fa-envelope"></i>
          </span>
         
          <input className="form-input" id="txt-input" type="text" placeholder="votre email" name='email' onChange={(e) => Setemail(e.target.value)} value={email} required />
-           <div className="email error">
+           <h3 className="email error">
            
-         </div>
+         </h3>
      
       <br></br>
      
@@ -106,7 +114,7 @@ sendRquest().then(() => history('/profil') )
   </div>
   
 
-          <p ><NavLink style={{color:'whitesmoke'}} to='/'>Mot de passe oublié ?</NavLink></p>
+          <p ><NavLink style={{color:'whitesmoke'}} to='/forget-password'>Mot de passe oublié ?</NavLink></p>
           </form>
 </div>
                

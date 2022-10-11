@@ -1,4 +1,5 @@
 
+                        
                         // @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
                         @font-face {
                             font-family: Montserrat;
@@ -44,7 +45,7 @@
                             margin: 0;
                             padding: 0;
                             box-sizing: border-box;
-                            font-family: 'Montserrat';
+                       
                             scroll-behavior: smooth;
                         }
                         html{
@@ -55,4 +56,7 @@
                             margin: 0;
                             padding: 0;
                             list-style: none;
+                        } 
+                        body{
+                                font-family: 'Roboto' !important;
                         }

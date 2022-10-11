@@ -15,7 +15,7 @@
                 width: 100vw;
                 height: 85px;
                 display: flex;
-                justify-content: space-between;
+                justify-content: center;
                 align-items: center;
                 align-content: center;
     
@@ -26,18 +26,20 @@
                     z-index: 3;
     
                     img {
-                       width: 70px;
-                       border-radius: 50%;
+                       width: 50px;
+                       border-radius: 100%;
+                       display: none;
                     }
                 }
     
                 .links {
                     .menu {
                         display: flex;
-                        justify-content: space-between;
+                        justify-content: center;
                         align-items: center;
                         align-content: center;
                         position: relative;
+                     
     
     
     
@@ -59,6 +61,7 @@
     
                             i {
                                 margin-left: 10px;
+                                font-size: 30px !important;
                                 // transition: 3s ease all;
                             }
     
@@ -133,7 +136,7 @@
                     z-index: 3;
     
                     img {
-                        width: 70px;
+                        width: 65px;
                             border-radius: 50%;
                     }
                 }
@@ -166,6 +169,8 @@
     
                             i {
                                 margin-left: 10px;
+                                font-size: 40px !important;
+                                margin-top: 15px;
                                 // transition: 3s ease all;
                             }
     
@@ -239,7 +244,7 @@
                 z-index: 3;
 
                 img {
-                width: 80px;
+                width: 70px;
                     border-radius: 50%;
                 }
             }
@@ -272,6 +277,8 @@
 
                         i {
                             margin-left: 10px;
+                            font-size: 40px !important;
+                            margin-top: 15px;
                             // transition: 3s ease all;
                         }
 
@@ -380,6 +387,7 @@
 
                         i {
                             margin-left: 10px;
+                            font-size: 40px !important;
                             // transition: 3s ease all;
                         }
 
@@ -489,6 +497,7 @@ nav {
                         i {
                             margin-left: 10px;
                             // transition: 3s ease all;
+                            font-size: 40px !important;
                         }
 
                     }

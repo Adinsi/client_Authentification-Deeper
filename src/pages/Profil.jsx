@@ -1,24 +1,49 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import '../styles/pagesstyles/Form.scss';
 import axios from 'axios';
-import SignIn from '../component/SignIn';
+
 import '../styles/pagesstyles/Profil.scss'
 import Navbar from '../component/Navbar';
 import Uploadimage from '../component/Uploadimage';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteUser, setgetUsers,logOut } from '../features/user.reducers';
+
 axios.defaults.withCredentials = true;
-let firstRender = true;
 
-const Profil = () => {
 
-  const [user, setuser] = useState();
-  const [handleClick,sethandleClickParametre] = useState(false);
+const Profil = ({id}) => {
 
+  const history = useNavigate();
+  const [handleClick, sethandleClickParametre] = useState(false);
+  const dispatch = useDispatch();
+  const user = useSelector((state)=>state.user.user)
+const isloggin = useSelector(state=>state.user.user)
   const handleClickParametre = () => {
     sethandleClickParametre(!handleClick) 
   }
+  const handleDelete = () => {
+    axios.delete(`http://localhost:7500/api/user/${user._id}`).then(() => dispatch(deleteUser(user._id)));
+    history('/')
 
+  }
+
+  const sendlogOutRequest = async () => {
+    const res = await axios.post('http://localhost:7500/api/user/logout', null, {
+      withCredentials:true
+    })
+    if (res.status === 200) {
+      return res
+    }
+    return new Error('Déconnexion échoué, reprenez svp')
+  }
+  const handleLogOut = () => {
+    sendlogOutRequest().then(() => {
+  dispatch(logOut())
+})
+   
+  }
   const refreshToken= async () => {
   const res = await axios.get('http://localhost:7500/api/user/refresh', {
       withCredentials: true
@@ -36,11 +61,11 @@ const Profil = () => {
 
     useEffect(() => {
          sendRquest().then((data) => {
-      setuser(data.user)
+      dispatch(setgetUsers(data.user)) 
     })
       
-    },[])
-   
+    })
+ 
   return (
     <>
       {
@@ -116,13 +141,13 @@ const Profil = () => {
               </div>
               <div className="text-center">
                 <h3>
-                  Adinsi Abdias
+                 {user.nom} {user.prenom}
                 </h3>
                 <div className="h5 font-weight-300">
                   <i className="ni location_pin mr-2"></i>Benin
                 </div>
                 <div className="h5 mt-4">
-                  <i className="ni business_briefcase-24 mr-2"></i>Devellopeur web Front-end
+                  <i className="ni business_briefcase-24 mr-2"></i>{user.activite} 
                 </div>
                 {/* <div>
                   <i className="ni education_hat mr-2"></i>University of Computer Science
@@ -142,15 +167,15 @@ const Profil = () => {
                   <h3 className="mb-0">Mon compte</h3>
                 </div>
                 <div className="col-4 text-right">
-                      <a onClick={handleClickParametre} href="#!" className="btn btn-sm btn-primary">paramètres</a>
+                       <NavLink to='/' className="btn btn-sm btn-secondary" onClick={handleLogOut} >Deconnceter</NavLink>
                       <br />
-                       {
+                       {/* {
                       handleClick ? <>
-                          <a href="#!" className="btn btn-sm btn-secondary">Deconnceter</a>
+                          <NavLink to='/' className="btn btn-sm btn-secondary" onClick={handleLogOut} >Deconnceter</NavLink>
                           <br />
-                           <a style={{backgroundColor:"red"}} href="#!" className="btn btn-sm btn-danger">Supprimer mon compte</a>
+                           <a onClick={()=>handleDelete()} style={{backgroundColor:"red"}} href="#!" className="btn btn-sm btn-danger">Supprimer mon compte</a>
                       </> : null
-                    }
+                    } */}
                     </div>
                    
               </div>
@@ -163,37 +188,60 @@ const Profil = () => {
                     <div className="col-lg-6">
                       <div className="form-group focused">
                         <label className="form-control-label" for="input-username">Nom complet</label>
-                        <p  id="input-username" className="form-control form-control-alternative"  >Adinsi Abdias</p>
+                        <p  id="input-username" className="form-control form-control-alternative"  >{user.nom} {user.prenom}</p>
                       </div>
                     </div>
                     <div className="col-lg-6">
                       <div className="form-group">
                         <label className="form-control-label" for="input-email">Email</label>
-                        <p id="input-email" className="form-control form-control-alternative" >adinsiabdias@gmail.com</p>
+                        <p id="input-email" className="form-control form-control-alternative" >{user.email}</p>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-lg-6">
                       <div className="form-group focused">
-                        <label className="form-control-label" for="input-first-name">Groupe</label>
-                        <p type="text" id="input-first-name" className="form-control form-control-alternative" >Groupe de Zogbo</p>
+                              <label className="form-control-label" for="input-first-name">Groupe</label>
+                              <p type="text" id="input-first-name" className="form-control form-control-alternative" >{user.groupe}</p>
                       </div>
                     </div>
                     <div className="col-lg-6">
                       <div className="form-group focused">
                         <label className="form-control-label" for="input-last-name">Activité</label>
-                        <p  id="input-last-name" className="form-control form-control-alternative" >Devellopeur web front-end</p>
+                        <p  id="input-last-name" className="form-control form-control-alternative" >{user.activite} </p>
+                      </div>
+                          </div>
+                              <div className="col-lg-6">
+                      <div className="form-group focused">
+                        <label className="form-control-label" for="input-last-name">Contact Tel</label>
+                        <p id="input-last-name" className="form-control form-control-alternative" > +229 {user.tel} </p>
                       </div>
                     </div>
                   </div>
                 </div>
                 <hr className="my-4"></hr>
-                <h6 className="heading-small text-muted mb-4">Description</h6>
+                <h6 className="heading-small text-muted mb-4">Decrivez-vous en quelques lignes</h6>
                 <div className="pl-lg-4">
                   <div className="form-group focused">
-                    <label>Qui suis-je ?</label>
-                    <textarea rows="4" className="form-control form-control-alternative" placeholder="A few words about you ...">Passionné par les métiers du dévelloppemnet web ....</textarea>
+                          {/* {
+                            upadateForm === false && (
+                              <>
+                                <p onClick={() => setUpdateForm(upadateForm)}>{user.bio}</p>
+                                
+                                <button onClick={() => setUpdateForm(upadateForm)}>Modifier bio</button>
+                              </>
+                            )
+                          }
+                          {
+                            upadateForm && (
+                              <>
+                                <textarea type='text' defaultValue={user.bio} onChange={(e) => setBio(e.target.value)} ></textarea>
+                                <button onClick={handleUpdate}>Valider modifications</button>
+                              </>
+                            )
+                          } */}
+
+                       
                   </div>
                 </div>
                 <h6 className="heading-small text-muted mb-4">Contactez les administrateurs du site</h6>
