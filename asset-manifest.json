@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/client_authentification-Deeper/static/css/main.03c7bf77.css",
-    "main.js": "/client_authentification-Deeper/static/js/main.53e31940.js",
-    "static/media/Montserrat-SemiBold.ttf": "/client_authentification-Deeper/static/media/Montserrat-SemiBold.d5e0cc788cba9ced1fb9.ttf",
-    "static/media/Montserrat-ExtraBold.ttf": "/client_authentification-Deeper/static/media/Montserrat-ExtraBold.3a9ee100617f45a96d92.ttf",
-    "static/media/Montserrat-Medium.ttf": "/client_authentification-Deeper/static/media/Montserrat-Medium.c86e3b9010ff63c99166.ttf",
-    "static/media/Montserrat-Bold.ttf": "/client_authentification-Deeper/static/media/Montserrat-Bold.2c155811b35513d5beaa.ttf",
-    "static/media/Montserrat-Regular.ttf": "/client_authentification-Deeper/static/media/Montserrat-Regular.ceb11275ab638627a643.ttf",
-    "static/media/hero-img.svg": "/client_authentification-Deeper/static/media/hero-img.436b051a167d76e28779.svg",
-    "index.html": "/client_authentification-Deeper/index.html",
-    "main.03c7bf77.css.map": "/client_authentification-Deeper/static/css/main.03c7bf77.css.map",
-    "main.53e31940.js.map": "/client_authentification-Deeper/static/js/main.53e31940.js.map"
+    "main.css": "/client_Authentification-Deeper/static/css/main.ef7af53b.css",
+    "main.js": "/client_Authentification-Deeper/static/js/main.53e31940.js",
+    "static/media/Montserrat-SemiBold.ttf": "/client_Authentification-Deeper/static/media/Montserrat-SemiBold.d5e0cc788cba9ced1fb9.ttf",
+    "static/media/Montserrat-ExtraBold.ttf": "/client_Authentification-Deeper/static/media/Montserrat-ExtraBold.3a9ee100617f45a96d92.ttf",
+    "static/media/Montserrat-Medium.ttf": "/client_Authentification-Deeper/static/media/Montserrat-Medium.c86e3b9010ff63c99166.ttf",
+    "static/media/Montserrat-Bold.ttf": "/client_Authentification-Deeper/static/media/Montserrat-Bold.2c155811b35513d5beaa.ttf",
+    "static/media/Montserrat-Regular.ttf": "/client_Authentification-Deeper/static/media/Montserrat-Regular.ceb11275ab638627a643.ttf",
+    "static/media/hero-img.svg": "/client_Authentification-Deeper/static/media/hero-img.436b051a167d76e28779.svg",
+    "index.html": "/client_Authentification-Deeper/index.html",
+    "main.ef7af53b.css.map": "/client_Authentification-Deeper/static/css/main.ef7af53b.css.map",
+    "main.53e31940.js.map": "/client_Authentification-Deeper/static/js/main.53e31940.js.map"
   },
   "entrypoints": [
-    "static/css/main.03c7bf77.css",
+    "static/css/main.ef7af53b.css",
     "static/js/main.53e31940.js"
   ]
 }
