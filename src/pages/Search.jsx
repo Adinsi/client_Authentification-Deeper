@@ -12,7 +12,7 @@ const Search = () => {
     const [search, setSearch] = useState('');
     // const [users, setUsers] = useState([]);
   const [all, setAll] = useState(false)
-  const dispatch = useDispatch();
+ 
   const user = useSelector((state) => state.user.user);
   const users = useSelector((state) => state.users.users);
   const handleClick = () => {
@@ -22,25 +22,7 @@ const Search = () => {
 //     const dispatch = useDispatch();
 //    const users = useSelector((state)=>state.users.users);
     
-  const sendRquest = async () => {
-    const res = await axios.get('http://localhost:7500/api/user', {
-      withCredentials: true
-    }).catch(err => console.log(err));
-    const data = await res.data;
-    return data;
-  }
-   
 
-    useEffect(() => {
-         sendRquest().then((data) => {
-           dispatch(setgetusers(data));
-
-          
-           
-           
-    },[])
-      
-    })
     console.log(users);
     return (
        

@@ -10,6 +10,9 @@ export const usersSlice = createSlice({
    
             state.users = payload;
         },
+        setgetAll: (state, { payload }) => {
+            state.users = payload
+        }
     }
 })
 

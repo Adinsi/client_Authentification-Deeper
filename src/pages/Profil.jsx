@@ -14,15 +14,15 @@ axios.defaults.withCredentials = true;
 
 
 const Profil = ({id}) => {
-
+  const [followingPopUp,setfollowingPops] = useState(false)
+    const [followersPopUp,setfollowersPops] = useState(false)
   const history = useNavigate();
-  const [handleClick, sethandleClickParametre] = useState(false);
   const dispatch = useDispatch();
-  const user = useSelector((state)=>state.user.user)
-const isloggin = useSelector(state=>state.user.user)
-  const handleClickParametre = () => {
-    sethandleClickParametre(!handleClick) 
-  }
+  const user = useSelector((state) => state.user.user);
+  const users = useSelector((state) => state.users.users);
+
+
+  
   const handleDelete = () => {
     axios.delete(`http://localhost:7500/api/user/${user._id}`).then(() => dispatch(deleteUser(user._id)));
     history('/')
@@ -65,7 +65,7 @@ const isloggin = useSelector(state=>state.user.user)
     })
       
     })
- 
+//  console.log(users);
   return (
     <>
       {
@@ -84,15 +84,15 @@ const isloggin = useSelector(state=>state.user.user)
       <div className="container-fluid d-flex align-items-center">
         <div className="row">
           <div className="col-lg-7 col-md-10">
-                  <h1 className="display-2 text-white">{user.nom} {user.prenom}</h1>
-            <p className="text-white mt-0 mb-5">Deep social network est une plateforme web dédié au jeune professionnel de l'église biblique de la vie profonde. L'usage de ce site à caractère douteux est sanctionner par la suppression du compte définitivement.</p>
+                  <h1 className="display-2 text-black">{user.nom} {user.prenom}</h1>
+            <p className="text-black mt-0 mb-5">Deep social network est une plateforme web dédié au jeune professionnel de l'église biblique de la vie profonde. L'usage de ce site à caractère douteux est sanctionner par la suppression du compte définitivement.</p>
                 
                 
-                <div className="btn btn-sm btn-primary">
+                {/* <div className="btn btn-sm btn-primary">
                     <Uploadimage/>
 
                 </div>
-                    
+                     */}
                 
           </div>
         </div>
@@ -125,12 +125,13 @@ const isloggin = useSelector(state=>state.user.user)
                 <div className="col">
                   <div className="card-profile-stats d-flex justify-content-center mt-md-5">
                     <div>
-                      <span className="heading">22</span>
-                      <span className="description">Followers</span>
+                      <span style={{cursor:'pointer'}} onClick={()=>setfollowersPops(true)} className="heading">{user.followers.length}</span>
+                            <span className="description" >Followers</span>
+                        
                     </div>
                     <div>
-                      <span className="heading">10</span>
-                      <span className="description">Following</span>
+                      <span style={{cursor:'pointer'}} onClick={()=>setfollowingPops(true)} className="heading">{user.following.length}</span>
+                      <span className="description" >Following</span>
                     </div>
                     <div>
                       <span className="heading">89</span>
@@ -138,7 +139,63 @@ const isloggin = useSelector(state=>state.user.user)
                     </div>
                   </div>
                 </div>
-              </div>
+                    </div>
+                    
+                    
+                   {
+                followersPopUp && 
+                <div style={{position:"absolute",top:"0",background:'#0179C5'}} className='popUp'>
+                  <h3 style={{textAlign:'center'}}>Abonnéés</h3>
+                    <p style={{position:"absolute",top:"0",right:"0",display:'block',fontSize:"2rem",cursor:"pointer"}}  onClick={() => setfollowersPops(false)}><i class="fa-solid fa-xmark"></i></p>
+                    <ul>
+                      {
+                        users.map((users) => {
+                          for (let i = 0; i < user.followers.length; i++){
+                            if (users._id === user.followers[i]) {
+                              return (
+                                <li style={{color:'white',width:'320px',lineHeight:'20px',boxShadow:"5px 7px 5px whitesmoke"}} key={users._id}>
+                                  <img width={40} style={{marginLeft:'20px'}} src={users.picture} alt='picture' />
+                                  <span style={{ marginLeft: '20px' }}>{users.nom}    {users.prenom}</span>
+                                  <p style={{textAlign:'center'}}>{ users.activite}</p>
+                                  <p style={{textAlign:'center'}}>{ users.groupe}</p>
+                                  <h4>Follow handler</h4>
+                                </li>
+                              )
+                            }
+                          }
+                        })
+                      }
+                   
+                    </ul> 
+                 </div>
+                    } 
+                       {
+                followingPopUp && 
+                <div style={{position:"absolute",top:"0",background:'#0179C5'}} className='popUp'>
+                  <h3 style={{textAlign:'center'}}>Abonnement</h3>
+                    <p style={{position:"absolute",top:"0",right:"0",display:'block',fontSize:"2rem",cursor:"pointer"}}  onClick={() => setfollowingPops(false)}><i class="fa-solid fa-xmark"></i></p>
+                    <ul>
+                      {
+                        users.map((users) => {
+                          for (let i = 0; i < user.following.length; i++){
+                            if (users._id === user.following[i]) {
+                              return (
+                                <li style={{color:'white',width:'320px',lineHeight:'20px',boxShadow:"5px 7px 5px whitesmoke"}} key={users._id}>
+                                  <img width={40} style={{marginLeft:'20px'}} src={users.picture} alt='picture' />
+                                  <span style={{ marginLeft: '20px' }}>{users.nom}    {users.prenom}</span>
+                                  <p style={{textAlign:'center'}}>{ users.activite}</p>
+                                  <p style={{textAlign:'center'}}>{ users.groupe}</p>
+                                  <h4>Follow handler</h4>
+                                </li>
+                              )
+                            }
+                          }
+                        })
+                      }
+                   
+                    </ul> 
+                 </div>
+                        } 
               <div className="text-center">
                 <h3>
                  {user.nom} {user.prenom}
@@ -245,7 +302,7 @@ const isloggin = useSelector(state=>state.user.user)
                   </div>
                 </div>
                 <h6 className="heading-small text-muted mb-4">Contactez les administrateurs du site</h6>
-                <div className="pl-lg-4">
+                {/* <div className="pl-lg-4">
                   <div className="row">
                     <div className="col-md-12">
                       <div className="form-group focused">
@@ -274,7 +331,7 @@ const isloggin = useSelector(state=>state.user.user)
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <hr className="my-4"></hr>
                 
                 

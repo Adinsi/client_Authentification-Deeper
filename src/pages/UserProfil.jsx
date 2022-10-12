@@ -7,9 +7,9 @@ import '../styles/componentstyles//userProfile.scss';
 
 const UserProfil = () => {
       const user = useSelector((state)=>state.user.user)
+      const users = useSelector((state)=>state.users.users)
     const [data, setData] = useState([]);
-    const [followingPopUp,setfollowingPops] = useState(false)
-    const [followersPopUp,setfollowersPops] = useState(false)
+  
         const href = window.location.href;
     const id = href.slice(34) 
    const sendRquest = async () => {
@@ -27,7 +27,7 @@ const UserProfil = () => {
     })
       
     })
-  
+  console.log(user,users);
 
     return (
     
@@ -56,14 +56,14 @@ const UserProfil = () => {
       <div className="container">
         <div className="content">
           <div className="grid-2">
-            <button className="color-b circule"> <i className="fab fa-dribbble fa-2x"></i></button>
+            <button  className="color-b circule"> <i className="fab fa-dribbble fa-2x"></i></button>
                             <h2 className="title">{data.following ? data.following.length:""}</h2>
-            <p onClick={()=>setfollowingPops(true)} className="followers">Abonnement</p>
+            <p className="followers">Abonnement</p>
           </div>
           <div className="grid-2">
-            <button className="color-c circule"><i className="fab fa-behance fa-2x"></i></button>
+            <button  className="color-c circule"><i className="fab fa-behance fa-2x"></i></button>
             <h2 className="title">{data.followers?data.followers.length:""}</h2>
-            <p onClick={()=>setfollowersPops(true)} className="followers">Abonnées</p>
+            <p className="followers">Abonnées</p>
           </div>
           <div className="grid-2">
             <button className="color-d circule"><i className="fab fa-github-alt fa-2x"></i></button>
@@ -71,7 +71,7 @@ const UserProfil = () => {
             <p className="followers">Followers</p>
               </div>
         
-                          
+            
         </div>
       </div>
     </div>

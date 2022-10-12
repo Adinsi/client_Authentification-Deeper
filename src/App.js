@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ForgotPassword from "./component/ForgotPassword";
 import ResetPassword from "./component/ResetPassword";
@@ -10,11 +10,30 @@ import Search from "./pages/Search";
 
 import Condition from "./pages/Condition";
 import UserProfil from "./pages/UserProfil";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setgetusers } from "./features/users.reducers";
 
 
 
 
 const App = () => {
+   const dispatch = useDispatch();
+    const sendRquest = async () => {
+      const res = await axios
+        .get("http://localhost:7500/api/user", {
+          withCredentials: true,
+        })
+        .catch((err) => console.log(err));
+      const data = await res.data;
+      return data;
+    };
+
+    useEffect(() => {
+      sendRquest().then((data) => {
+        dispatch(setgetusers(data));
+      }, []);
+    });
   return (
     <>
  
