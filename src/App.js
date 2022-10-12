@@ -13,34 +13,20 @@ import UserProfil from "./pages/UserProfil";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setgetusers } from "./features/users.reducers";
+import Profil2 from "./pages/Profil2";
 
 
 
 
 const App = () => {
-   const dispatch = useDispatch();
-    const sendRquest = async () => {
-      const res = await axios
-        .get("http://localhost:7500/api/user", {
-          withCredentials: true,
-        })
-        .catch((err) => console.log(err));
-      const data = await res.data;
-      return data;
-    };
 
-    useEffect(() => {
-      sendRquest().then((data) => {
-        dispatch(setgetusers(data));
-      }, []);
-    });
   return (
     <>
  
         <BrowserRouter>
           <Routes>
             <Route path="/*" element={<Form />} />
-            <Route path="/profil" element={<Profil />} />
+            <Route path="/profil" element={<Profil2 />} />
             <Route path="/home" element={<Home />} />
             <Route path="/search" element={<Search />} />
             <Route path="/help" element={<Help />} />
@@ -58,6 +44,7 @@ const App = () => {
               path="/user_profil/:id"
               element={<UserProfil />}
             />
+           
           </Routes>
         </BrowserRouter>
 

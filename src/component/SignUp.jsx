@@ -30,26 +30,26 @@ const SignUp = (props) => {
     }
   };
   const sendRquest = async () => {
-    const terms = document.getElementById("terms");
-    const emailError = document.querySelector(".email.error");
+    // const terms = document.getElementById("terms");
+    // const emailError = document.querySelector(".email.error");
     
    
-    const passwordConfirmError = document.querySelector(
-      ".password-confirm.error");
-    const termsError = document.querySelector(".terms.error");
+    // const passwordConfirmError = document.querySelector(
+    //   ".password-confirm.error");
+    // const termsError = document.querySelector(".terms.error");
 
-    passwordConfirmError.innerHTML = "";
-       termsError.innerHTML = "";
-       emailError.innerHTML = ""
+    // passwordConfirmError.innerHTML = "";
+    //    termsError.innerHTML = "";
+    //    emailError.innerHTML = ""
     
     
-     
-    
-      if (password !== controlPassword) {
-        passwordConfirmError.innerHTML =
-          "Les mots de passe ne correspondent pas";
+    //   if (password !== controlPassword) {
+    //     passwordConfirmError.innerHTML =
+    //       "Les mots de passe ne correspondent pas";
       
-    } 
+    // } 
+    
+   const emailError = document.querySelector(".email.error");
     
  const res =  await axios
             .post(`http://localhost:7500/api/user/register`,
@@ -67,6 +67,7 @@ const SignUp = (props) => {
    if (error.response.data.message.includes("L'utilisateur existe déja ! connecter vous")) {
               emailError.innerHTML = error.response.data.message
    }
+      
    
             })
                 
@@ -167,30 +168,32 @@ const SignUp = (props) => {
         <i className="fa fa-key"></i>
        </span>
     
-      <input className="form-input" type="password" placeholder="Votre mot de passe" minLength={6}  id="password"
+      <input className="form-input" type="text" placeholder="Votre mot de passe" minLength={6}  id="password"
             onChange={(e) => Setpassword(e.target.value)}
-            value={password}  name="password" required />
+                      value={password} name="password" required />
+                      <i onClick={Eyeclick}  className={eye ? "fa-solid fa-eye": "fa-solid fa-eye-slash" }   aria-hidden="true"  type="button" id="eye"></i>
  
      
                         <br></br>  <br></br>
-                        <span className="input-item">
+                        {/* <span className="input-item">
         <i className="fa fa-key"></i>
                         </span>
                        
     
       <input className="form-input" type="password" placeholder="confirmer votre mot de passe" id="password-conf"
             onChange={(e) => setControlPassword(e.target.value)}
-          name='password' required  value={controlPassword} />
+                      name='password' 
+                    value={controlPassword} /> */}
      
 
      {/* <span>
-        <i  className={eye ? "fa-solid fa-eye": "fa-solid fa-eye-slash" }  onClick={Eyeclick} aria-hidden="true"  type="button" id="eye"></i>
+        <i  className={eye ? "fa-solid fa-eye": "fa-solid fa-eye-slash" }   aria-hidden="true"  type="button" id="eye"></i>
      </span> */}
      
                         <h3 className='password-confirm error'>
                             
      </h3>
-                        <br></br>
+                        
                          <p style={{color:'white'}} >   <input style={{width:"20px"}} type="checkbox" id="terms" required />
             J'accepte les{" "}
             <NavLink to="/condition_generale" >

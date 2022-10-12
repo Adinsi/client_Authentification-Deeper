@@ -26,7 +26,7 @@ const [signUpModal, setSignUpModal] = useState(true);
       <i className="fa fa-user-plus" ></i>
             </button>
                <button id='login'  className={signInModal ? 'active-btn':null} onClick={handleModals} >Se connecter
-      <i className="fa fa-user-plus"></i>
+<i class="fa-sharp fa-solid fa-user"></i>
       </button>
           </div>
                 {

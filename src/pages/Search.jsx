@@ -9,15 +9,29 @@ import { setgetusers } from '../features/users.reducers';
 
 
 const Search = () => {
-    const [search, setSearch] = useState('');
+    const [search, setSearch] = useState(null);
     // const [users, setUsers] = useState([]);
   const [all, setAll] = useState(false)
  
   const user = useSelector((state) => state.user.user);
   const users = useSelector((state) => state.users.users);
-  const handleClick = () => {
-    console.log(user.id)
-  }
+
+     const dispatch = useDispatch();
+    const sendRquest = async () => {
+      const res = await axios
+        .get("http://localhost:7500/api/user", {
+          withCredentials: true,
+        })
+        .catch((err) => console.log(err));
+      const data = await res.data;
+      return data;
+    };
+
+    useEffect(() => {
+      sendRquest().then((data) => {
+        dispatch(setgetusers(data));
+      }, []);
+    });
     
 //     const dispatch = useDispatch();
 //    const users = useSelector((state)=>state.users.users);
@@ -102,11 +116,14 @@ const Search = () => {
                 <div>
                   
                 <h1  style={{textAlign:'center',padding:'20px',fontSize:'1.2rem'}} >Quelques suggestions d'amis
-                  que vous pouvez connaitre 
+                  que vous pouvez connaitre
                   </h1>
                 {
-                  users.filter(el => {
-                  if (el.activite === user.activite && el.groupe === user.groupe) {
+                  // eslint-disable-next-line array-callback-return
+                  users.filter((el) => {
+                    
+                    
+             if (el.activite === user.activite && el.groupe === user.groupe) {
                     return true
                   }
                 }).slice(0,6)
