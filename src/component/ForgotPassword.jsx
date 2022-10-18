@@ -9,7 +9,7 @@ const ForgotPassword = () => {
     const sendRquest = async () => {
          const emailError = document.querySelector(".email.error");
  const res =  await axios
-            .put(`http://localhost:7500/api/user/forget-password`,
+            .put(`${process.env.REACT_APP_URL_USER}forget-password`,
                 
  {
  
@@ -48,7 +48,7 @@ Vous rencontrez toujours des difficultés pour vous connecter ? Veuillez contact
    <div className="con">
    
    <header className="head-form">
-      <h2>Mot de passe oublié</h2>
+      <h4>Mot de passe oublié</h4>
 
       <p>Votre adress email </p>
    </header>

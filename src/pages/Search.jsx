@@ -1,15 +1,17 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
+/* eslint-disable array-callback-return */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import Navbar from '../component/Navbar';
 import '../styles/pagesstyles/search.scss'
-import { setgetAllUsers } from '../features/user.reducers';
+import {  setgetUsers } from '../features/user.reducers';
 import { setgetusers } from '../features/users.reducers';
 
 
 const Search = () => {
-    const [search, setSearch] = useState(null);
+    const [search, setSearch] = useState('');
     // const [users, setUsers] = useState([]);
   const [all, setAll] = useState(false)
  
@@ -22,38 +24,55 @@ const Search = () => {
         .get("http://localhost:7500/api/user", {
           withCredentials: true,
         })
-        .catch((err) => console.log(err));
+        // .catch((err) => console.log(err));
       const data = await res.data;
       return data;
     };
 
+  const sendRquestUser = async () => {
+    const res = await axios.get('http://localhost:7500/api/user/jwt', {
+      withCredentials: true
+    })
+      // .catch(err => console.log(err));
+    const data = await res.data;
+    return data;
+  }
+  useEffect(() => {
+    sendRquestUser().then((data) => {
+      dispatch(setgetUsers(data.user))
+    });
+  })
+
     useEffect(() => {
       sendRquest().then((data) => {
         dispatch(setgetusers(data));
-      }, []);
+        
+      });
     });
     
 //     const dispatch = useDispatch();
 //    const users = useSelector((state)=>state.users.users);
     
 
-    console.log(users);
+    // console.log(users);
     return (
        
-        <div>
+      <>
+        {
+          user &&   <div>
             <Navbar />
         <br /><br /><br /><br />
        <h1 style={{textAlign:'center',padding:'20px',fontSize:'1.2rem'}}>Recherchez vous un(e) {user.activite} comme vous ? </h1>
       
-               <div class="searchBox">
+               <div className="searchBox">
  
-            <input  id="search" class="searchInput"type="text" name="" placeholder="Recherche"   onChange={(e) => {
-              e.target.value.length >= 1 && setSearch(e.target.value);
+            <input  id="search" className="searchInput"type="text" name="" placeholder="Recherche"   onChange={(e) => {
+              e.target.value.length >=1 && setSearch(e.target.value);
               setAll(true)
-              e.target.value.reset()
+             
             }} />
-            <button class="searchButton" href="#">
-                <i class="material-icons">
+            <button className="searchButton" href="#">
+                <i className="material-icons">
                     search
                 </i>
             </button>
@@ -63,12 +82,9 @@ const Search = () => {
          <div className="recherches">
 
       <div className="map">
-        { all ? users.filter((el) => {
+        { all ? users.filter( el => {
             if (
-              el.activite
-                  
-                .toLocaleLowerCase()
-                .includes(search.toLocaleLowerCase()) 
+              el.activite?.toLocaleLowerCase().includes(search.toLocaleLowerCase())
             ) {
               return true ;
           }
@@ -80,25 +96,25 @@ const Search = () => {
            
              
         })
-          // .slice(0,20)
-          .map((el, index) => {
+          
+          .map((el) => {
             return (
                  
               
-                   <NavLink key={el} to={`/user_profil/${el._id}`} >
+                   <NavLink key={el._id}  to={`/user_profil/${el._id}`} >
                     
-         <section>
-    <div class="container">
-    	<div class="row">
+         <section    >
+    <div className="container">
+    	<div className="row">
     	    
-    		<div class="col-md-4">
-    		    <div class="card profile-card-1">
-    		        <img src="https://images.pexels.com/photos/946351/pexels-photo-946351.jpeg?w=500&h=650&auto=compress&cs=tinysrgb" alt="profile-sample1" class="background"/>
-    		        <img src={el.picture}  alt='picture' class="profile"/>
-                    <div class="card-content">
-                            <h2>{el.nom} {el.prenom}<small>{el.activite}</small></h2>
-                             <p>Groupe de : {el.groupe}</p>
-                    {/* <div class="icon-block"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"> <i class="fa fa-twitter"></i></a><a href="#"> <i class="fa fa-google-plus"></i></a></div> */}
+    		<div className="col-md-4">
+    		    <div className="card profile-card-1">
+    		        <img src="https://images.pexels.com/photos/946351/pexels-photo-946351.jpeg?w=500&h=650&auto=compress&cs=tinysrgb" alt="profile-sample1" className="background"/>
+    		        <img src={el.picture}  alt='picture_card' className="profile"/>
+                    <div className="card-content">
+                            <h2 >{el.nom} {el.prenom}<small>{el.activite}</small></h2>
+                             <p>ville de : {el.ville}</p>
+                    {/* <div className="icon-block"><a href="#"><i className="fa fa-facebook"></i></a><a href="#"> <i className="fa fa-twitter"></i></a><a href="#"> <i className="fa fa-google-plus"></i></a></div> */}
                     </div>
                 </div>
             
@@ -123,27 +139,28 @@ const Search = () => {
                   users.filter((el) => {
                     
                     
-             if (el.activite === user.activite && el.groupe === user.groupe) {
+             if (  el.activite?.toLocaleLowerCase().includes(user.activite?.toLocaleLowerCase()) && el.ville?.toLocaleLowerCase().includes(user.ville?.toLocaleLowerCase())) {
                     return true
                   }
-                }).slice(0,6)
-                  .map((el, index) => {
+                  }).slice(0, 6)
+                    
+                  .map((el) => {
                   return(
                  
-                      <NavLink key={el} to={`/user_profil/${el._id}`} >
+                      <NavLink key={el._id} to={`/user_profil/${el._id}`} >
                     
-         <section>
-    <div class="container">
-    	<div class="row">
+         <section  >
+    <div className="container">
+    	<div className="row">
     	    
-    		<div class="col-md-4">
-    		    <div class="card profile-card-1">
-    		        <img src="https://images.pexels.com/photos/946351/pexels-photo-946351.jpeg?w=500&h=650&auto=compress&cs=tinysrgb" alt="profile-sample1" class="background"/>
-    		        <img src={el.picture}  alt='picture' class="profile"/>
-                    <div class="card-content">
+    		<div className="col-md-4">
+    		    <div className="card profile-card-1">
+    		        <img src="https://images.pexels.com/photos/946351/pexels-photo-946351.jpeg?w=500&h=650&auto=compress&cs=tinysrgb" alt="profile-sample1" className="background"/>
+    		        <img src={el.picture}  alt='picture' className="profile"/>
+                    <div className="card-content">
                                   <h2>{el.nom} {el.prenom}<small>{el.activite}</small></h2>
-                                  <p>{el.groupe}</p>
-                    {/* <div class="icon-block"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"> <i class="fa fa-twitter"></i></a><a href="#"> <i class="fa fa-google-plus"></i></a></div> */}
+                                  <p>{el.ville}</p>
+                    {/* <div className="icon-block"><a href="#"><i className="fa fa-facebook"></i></a><a href="#"> <i className="fa fa-twitter"></i></a><a href="#"> <i className="fa fa-google-plus"></i></a></div> */}
                     </div>
                 </div>
             
@@ -161,6 +178,8 @@ const Search = () => {
       {/* <Footer/> */}
     </div>
         </div>
+        }
+      </>
      
       
     );

@@ -15,7 +15,8 @@ const UserProfil = () => {
    const sendRquest = async () => {
     const res = await axios.get(`http://localhost:7500/api/user/${id}`, {
       withCredentials: true
-    }).catch(err => console.log(err));
+    })
+      // .catch(err => console.log(err));
     const data = await res.data;
     return data;
   }
@@ -27,7 +28,7 @@ const UserProfil = () => {
     })
       
     })
-  console.log(user,users);
+  // console.log(user,users);
 
     return (
     
@@ -48,12 +49,12 @@ const UserProfil = () => {
                         Adress Email : {data.email}</a>
                     <br/>
         <a href={`tel:${data.tel}`} >Contact mobile : {data.tel}</a>
-        <p>Groupe de district : {data.groupe}</p>
+        <p>ville de : {data.ville}</p>
                     <p>Membre dépuis le : {dateParser( data.createdAt)}</p>
       </div>
      
       <hr></hr>
-      <div className="container">
+      {/* <div className="container">
         <div className="content">
           <div className="grid-2">
             <button  className="color-b circule"> <i className="fab fa-dribbble fa-2x"></i></button>
@@ -73,7 +74,7 @@ const UserProfil = () => {
         
             
         </div>
-      </div>
+      </div> */}
     </div>
   
 

@@ -1,0 +1,12 @@
+.loader{
+width: 80vw;
+height: 1%vh;
+object-fit: cover;
+
+margin: auto;
+overflow-x: hidden;
+
+position: absolute;
+left: 50%;
+transform: translateX(-50%);
+}

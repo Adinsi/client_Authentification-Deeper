@@ -1,13 +1,15 @@
-import React, { useState} from 'react';
+import React, {  useState} from 'react';
 
 import '../styles/componentstyles/SignIn.scss';
 import { NavLink, useNavigate } from "react-router-dom";
+
 
 import axios from 'axios'
 
 const SignIn = () => {
   const history = useNavigate();
-    const [email, Setemail] = useState('');
+  const [email, Setemail] = useState('');
+
   const [password, Setpassword] = useState('');
   const [eye, seteye] = useState(true);
   const Emailerror =document.querySelector('.email')
@@ -25,7 +27,7 @@ const SignIn = () => {
   };
     const sendRquest = async () => {
  const res =  await axios
-            .post(`http://localhost:7500/api/user/login`,
+            .post(`${process.env.REACT_APP_URL_USER}login`,
                 
  {
  
@@ -50,12 +52,15 @@ const SignIn = () => {
 
     e.preventDefault();
     
- 
-sendRquest().then(() => history('/profil') )
+
+sendRquest().then(() => history('/home') )
         
         
       
   }
+
+  
+ 
   return (
       
    
@@ -104,7 +109,7 @@ sendRquest().then(() => history('/profil') )
       <div className="password error"></div>
      
       <br></br>
-      <button className="log-in"> Se connecter </button>
+      <button className="log-in send"> Se connecter </button>
    </div>
   
                 <br></br>

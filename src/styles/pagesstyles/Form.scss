@@ -1,20 +1,12 @@
 .formulaire {
-    background-image: linear-gradient(-225deg, #0179c5 0%, #029664 100%);
-    background-image: linear-gradient(to top, #135883 0%, #14ae7a 100%);
-
-    // background-attachment: fixed;
-    // background-repeat: no-repeat;
-    // background-image: url('../../../public/assets/logo.jpg');
-
-    // background-size: cover;
-    // // background-position: center;
-
-    font-family: 'Vibur', cursive;
-    /*   the main font */
-    font-family: 'Abel', sans-serif;
+    background-image: linear-gradient(-225deg, #0E1D34, rgba(23, 162, 184, 1) 100%);
+    background-image: linear-gradient(to top, #0E1D34 0%, #14ae7a 100%);
+   
     opacity: .95;
     width: 100%;
-        // background-color: whitesmoke;
+
+    margin: auto;
+       
    .formulaireSignInSignUp{
     width: 100%;
     overflow-x: hidden;
@@ -30,7 +22,7 @@
         margin: auto;
        
         button{
-            margin-right: 15px;
+            margin-right: 5px;
             background: #B8F2E6;
             width: auto;
         }

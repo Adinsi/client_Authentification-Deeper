@@ -1,546 +1,205 @@
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect,  useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import '../styles/pagesstyles/Home.scss';
-import emailjs from 'email-js';
+
 import Navbar from '../component/Navbar';
 import { setgetUsers } from '../features/user.reducers';
+// import { dateParser, isempty } from '../component/Utils';
+import FormPost from '../component/FormPost';
+import { getAllPost } from '../features/post.reducers';
+import ListPost from '../component/ListPost';
+
+
 
 
 const Home = () => {
+  const [loadPost, setloadPost] = useState(true)
+  const [count, setcount] = useState(5);
+  
 
   const user = useSelector(state => state.user.user);
-    const users = useSelector((state) => state.users.users);
-    const dispatch = useDispatch();
-      const form = useRef();
-  const sendEmail = (e) => {
-    e.preventDefault();
-    const message = document.getElementById("message");
+  const users = useSelector((state) => state.users.users);
+  const allPosts = useSelector((state) => state.posts.posts);
+  
+ 
 
-    emailjs
-      .sendForm(
-        "service_o19gmcb",
-        "template_ww95nbk",
-        form.current,
-        "eNbGuhHH13G4a2Mho"
-      )
-      .then(
-        (result) => {
-          message.innerHTML =
-            "Votre requète à bien été envoyé , vous recevrez un email dans quelques instants";
-          message.style.color = "green";
-        },
-        (error) => {
-          message.innerHTML =
-            "Réquète non traité, veuillez vérifier votre connexion internet et réessayer.";
-          message.style.color = "red";
-        }
-      );
-  };
 
-     const sendRquest = async () => {
-    const res = await axios.get('http://localhost:7500/api/user/jwt', {
+  const dispatch = useDispatch();
+  // const form = useRef();
+  // const sendEmail = (e) => {
+  //   e.preventDefault();
+  //   const message = document.getElementById("message");
+
+  //   emailjs
+  //     .sendForm(
+  //       "service_o19gmcb",
+  //       "template_ww95nbk",
+  //       form.current,
+  //       "eNbGuhHH13G4a2Mho"
+  //     )
+  //     .then(
+  //       (result) => {
+  //         message.innerHTML =
+  //           "Votre requète à bien été envoyé , vous recevrez un email dans quelques instants";
+  //         message.style.color = "green";
+  //       },
+  //       (error) => {
+  //         message.innerHTML =
+  //           "Réquète non traité, veuillez vérifier votre connexion internet et réessayer.";
+  //         message.style.color = "red";
+  //       }
+  //     );
+  // };
+
+  
+
+ 
+  const sendRquestPost = async () => {
+    const res = await axios.get(`${process.env.REACT_APP_URL_POST}`, {
       withCredentials: true
-    }).catch(err => console.log(err));
+    })
+      // .catch(err => console.log(err));
     const data = await res.data;
     return data;
   }
 
-    useEffect(() => {
-         sendRquest().then((data) => {
-      dispatch(setgetUsers(data.user)) 
-    })
-      
-    })
- 
    
+  const loadMore = () => {
+    if (window.innerHeight + document.documentElement.scrollTop + 1 > document.scrollingElement) {
+      setloadPost(true)
+    }
+  }
+  
+  const sendRquest = async () => {
+    const res = await axios.get(`${process.env.REACT_APP_URL_USER}jwt`, {
+      withCredentials: true
+    })
+      // .catch(err => console.log(err));/
+    const data = await res.data;
+    return data;
+  }
+
+ 
+
+  useEffect(() => {
+    if (loadPost) {
+        sendRquestPost().then(() => {
+           dispatch(getAllPost());
+          setloadPost(false);
+          setcount(count+5)
+           
+
+    })
+    }
+    window.addEventListener('scroll', loadMore
+    );
+    return window.removeEventListener('scroll',loadMore)
+  
+
+      
+   },[loadPost  , dispatch])
+  
+  useEffect(() => {
+      sendRquest().then((data) => {
+        dispatch(setgetUsers(data.user))
+      })
+})
+  
+  
     return (
-        <div>
+      <>
+        {
+          user && 
+            <>
+        
             <Navbar />
         <br></br>
             
+         <section id="hero" className="hero d-flex align-items-center">
+    <div className="container">
+      <div className="row gy-4 d-flex justify-content-between">
+        <div className="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
+                <h2 data-aos="fade-up" style={{textTransform:'Uppercase'}}>Bienvennue  {user.prenom} {user.nom}, {user.activite} dans la ville de {user.ville} </h2>
+                <p data-aos="fade-up" data-aos-delay="100">En vous inscrivant sur la plateforme SearchMeri, vous permettez aux gens de vos communautées de vous rejoindre grace a ce numéros {user.tel} et cet adress email : {user.email}</p>
+
+          <div className="form-search d-flex align-items-stretch mb-3" data-aos="fade-up" data-aos-delay="200">
+            <h1   className="form-control" placeholder="ZIP code or CitY" >The family is growing</h1>
        
-        <section id="hero" class="d-flex align-items-center">
-
-    <div class="container">
-      <div class="row gy-4">
-        <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
-                            <h1>Bienvennue {user.nom} {user.prenom} sur la plateforme sociaux de la vie profonde</h1>
-                            <h2>Nous vous promettons de vous permettre a trouver les membres de l'église qui sont {user.activite} comme vous si possible dans le groupe de {user.groupe} et environs</h2>
-          <div>
-            <a href="#about" class="btn-get-started scrollto">Commencer</a>
           </div>
-        </div>
-        <div class="col-lg-6 order-1 order-lg-2 hero-img">
-                            <img src="./assets/hero-img.svg" class="img-fluid animated" alt="" />
-                             
-        </div>
-      </div>
-    </div>
 
-  </section>
-            <div id="main">
-                <section id="about" class="about">
-      <div class="container">
+          <div className="row gy-4" data-aos="fade-up" data-aos-delay="400">
 
-        <div class="row justify-content-between">
-          <div class="col-lg-5 d-flex align-items-center justify-content-center about-img">
-            <img src="./assets/about-img.svg" class="img-fluid" alt="" data-aos="zoom-in" />
-          </div>
-          <div class="col-lg-6 pt-5 pt-lg-0">
-            <h3 data-aos="fade-up">Vos informations doivent rester sécrete.</h3>
-            <p data-aos="fade-up" data-aos-delay="100">
-                                    En s'inscrivant sur la plateforme vous permettez au membres de vous retrouver et de vous contactez avec cet email : <br></br> {user.email}
-            </p>
-            <div class="row">
-              <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
-                <i class="bx bx-receipt"></i>
-                <h4>Corporis voluptates sit</h4>
-                <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
-              </div>
-              <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
-                <i class="bx bx-cube-alt"></i>
-                <h4>Ullamco laboris nisi</h4>
-                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt</p>
+            <div className="col-lg-3 col-6">
+              <div className="stats-item text-center w-100 h-100">
+                      <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" className="purecounter">{users.length}</span>
+                <p>Inscrits</p>
               </div>
             </div>
+
+            <div className="col-lg-3 col-6">
+              <div className="stats-item text-center w-100 h-100">
+                      <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" className="purecounter">{users.length}</span>
+                <p>Active</p>
+              </div>
+            </div>
+
+            <div className="col-lg-3 col-6">
+              <div className="stats-item text-center w-100 h-100">
+                      <span data-purecounter-start="0" data-purecounter-end="1453" data-purecounter-duration="1" className="purecounter">+{1000}</span>
+                <p>Objectif</p>
+              </div>
+            </div>
+
+            <div className="col-lg-3 col-6">
+              <div className="stats-item text-center w-100 h-100">
+                      <span data-purecounter-start="0" data-purecounter-end="32" data-purecounter-duration="1" className="purecounter">{ allPosts?.length}</span>
+                <p>Posts</p>
+              </div>
+            </div>
+
           </div>
+        </div>
+
+        <div className="col-lg-5 order-1 order-lg-2 hero-img" data-aos="zoom-out">
+          <img src="assets/img/hero-img.svg" className="img-fluid mb-3 mb-lg-0" alt="" />
         </div>
 
       </div>
-                </section>
-                
-                <section id="services" class="services section-bg">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Actualitéés</h2>
-          <p>Découvrez chaque sémaine les différents</p>
-        </div>
-
-        <div class="row">
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-            <div class="icon-box">
-              <div class="icon"><i class="bx bxl-dribbble"></i></div>
-              <h4 class="title"><a href="">La grande croisade du mois d'octobre</a></h4>
-              <p class="description">L'église biblique de la vie profonde organise ce mois çi la grande croisade dénommé la ...</p>
-            </div>
           </div>
-
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-file"></i></div>
-              <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
-              <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="300">
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-tachometer"></i></div>
-              <h4 class="title"><a href="">Magni Dolores</a></h4>
-              <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="400">
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-world"></i></div>
-              <h4 class="title"><a href="">Nemo Enim</a></h4>
-              <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-                </section>
-                
-                  <section id="portfolio" class="portfolio">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          {/* <h2>Quelques images des précédents programmes de l'église</h2> */}
-          <p>Quelques images des précédents programmes de l'église</p>
-        </div>
-
-        <div class="row" data-aos="fade-up" data-aos-delay="100">
-          <div class="col-lg-12">
-            <ul id="portfolio-flters">
-              <li data-filter="*" class="filter-active">All</li>
-              <li data-filter=".filter-app">Impact</li>
-              <li data-filter=".filter-card">Programme spéciaux</li>
-              <li data-filter=".filter-web">Croisade</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-1.jpg" class="img-fluid" alt="" />
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/portfolio-1.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1"><i class="bi bi-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
-              </div>
-              <div class="portfolio-info">
-                <h4>App 1</h4>
-                <p>App</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-2.jpg" class="img-fluid" alt="" />
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/portfolio-2.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 3"><i class="bi bi-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
-              </div>
-              <div class="portfolio-info">
-                <h4>Web 3</h4>
-                <p>Web</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-3.jpg" class="img-fluid" alt="" />
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/portfolio-3.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 2"><i class="bi bi-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
-              </div>
-              <div class="portfolio-info">
-                <h4>App 2</h4>
-                <p>App</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-4.jpg" class="img-fluid" alt="" />
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/portfolio-4.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 2"><i class="bi bi-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
-              </div>
-              <div class="portfolio-info">
-                <h4>Card 2</h4>
-                <p>Card</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-5.jpg" class="img-fluid" alt="" />
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/portfolio-5.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 2"><i class="bi bi-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
-              </div>
-              <div class="portfolio-info">
-                <h4>Web 2</h4>
-                <p>Web</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-6.jpg" class="img-fluid" alt="" />
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/portfolio-6.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 3"><i class="bi bi-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
-              </div>
-              <div class="portfolio-info">
-                <h4>App 3</h4>
-                <p>App</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-7.jpg" class="img-fluid" alt="" />
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/portfolio-7.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 1"><i class="bi bi-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
-              </div>
-              <div class="portfolio-info">
-                <h4>Card 1</h4>
-                <p>Card</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-8.jpg" class="img-fluid" alt="" />
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/portfolio-8.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 3"><i class="bi bi-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
-              </div>
-              <div class="portfolio-info">
-                <h4>Card 3</h4>
-                <p>Card</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-9.jpg" class="img-fluid" alt="" />
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/portfolio-9.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 3"><i class="bi bi-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
-              </div>
-              <div class="portfolio-info">
-                <h4>Web 3</h4>
-                <p>Web</p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-                </section>
-                  <section id="faq" class="faq section-bg">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>F.A.Q</h2>
-          <p>Frequently Asked Questions</p>
-        </div>
-
-        <ul class="faq-list" data-aos="fade-up" data-aos-delay="100">
-
-          <li>
-            <div data-bs-toggle="collapse" class="collapsed question" href="#faq1">Non consectetur a erat nam at lectus urna duis? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-            <div id="faq1" class="collapse" data-bs-parent=".faq-list">
-              <p>
-                Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
-              </p>
-            </div>
-          </li>
-
-          <li>
-            <div data-bs-toggle="collapse" href="#faq2" class="collapsed question">Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-            <div id="faq2" class="collapse" data-bs-parent=".faq-list">
-              <p>
-                Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
-              </p>
-            </div>
-          </li>
-
-          <li>
-            <div data-bs-toggle="collapse" href="#faq3" class="collapsed question">Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-            <div id="faq3" class="collapse" data-bs-parent=".faq-list">
-              <p>
-                Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi quis
-              </p>
-            </div>
-          </li>
-
-          <li>
-            <div data-bs-toggle="collapse" href="#faq4" class="collapsed question">Ac odio tempor orci dapibus. Aliquam eleifend mi in nulla? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-            <div id="faq4" class="collapse" data-bs-parent=".faq-list">
-              <p>
-                Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
-              </p>
-            </div>
-          </li>
-
-          <li>
-            <div data-bs-toggle="collapse" href="#faq5" class="collapsed question">Tempus quam pellentesque nec nam aliquam sem et tortor consequat? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-            <div id="faq5" class="collapse" data-bs-parent=".faq-list">
-              <p>
-                Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in est ante in. Nunc vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing bibendum est. Purus gravida quis blandit turpis cursus in
-              </p>
-            </div>
-          </li>
-
-          <li>
-            <div data-bs-toggle="collapse" href="#faq6" class="collapsed question">Tortor vitae purus faucibus ornare. Varius vel pharetra vel turpis nunc eget lorem dolor? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-            <div id="faq6" class="collapse" data-bs-parent=".faq-list">
-              <p>
-                Laoreet sit amet cursus sit amet dictum sit amet justo. Mauris vitae ultricies leo integer malesuada nunc vel. Tincidunt eget nullam non nisi est sit amet. Turpis nunc eget lorem dolor sed. Ut venenatis tellus in metus vulputate eu scelerisque. Pellentesque diam volutpat commodo sed egestas egestas fringilla phasellus faucibus. Nibh tellus molestie nunc non blandit massa enim nec.
-              </p>
-            </div>
-          </li>
-
-        </ul>
-
-      </div>
-                </section>
-                
-                
-                
-                  <section id="contact" class="contact">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Contact Us</h2>
-          <p>Contact us the get started</p>
-        </div>
-
-        <div class="row">
-
-          <div class="col-lg-5 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
-            <div class="info">
-              <div class="address">
-                <i class="bi bi-geo-alt"></i>
-                <h4>Location:</h4>
-                <p>A108 Adam Street, New York, NY 535022</p>
-              </div>
-
-              <div class="email">
-                <i class="bi bi-envelope"></i>
-                <h4>Email:</h4>
-                <p>info@example.com</p>
-              </div>
-
-              <div class="phone">
-                <i class="bi bi-phone"></i>
-                <h4>Call:</h4>
-                <p>+1 5589 55488 55s</p>
-              </div>
-
-              {/* <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe> */}
-            </div>
-
-          </div>
-
-                            <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
-                                
-            <form  id="validation" ref={form} onSubmit={sendEmail}>
-              <div class="row">
-                <div class="form-group col-md-6">
-                   <label for="nom">
-              Nom *
-              <input
-                required
-                placeholder="Ex:Jean Descartes"
-                type="text"
-                name="name"
-                id="nom"
-                minLength={4}
-                maxLength={25}
-              />
-            </label>
-                </div>
-                <div class="form-group col-md-6 mt-3 mt-md-0">
-                  <label for="email">
-              Email * :
-              <input
-                required
-                placeholder="Ex :jeanDescartes@gmail.com"
-                type="email"
-                name="email"
-                id=""
-              />
-            </label>
-                </div>
-              </div>
-              <div class="form-group mt-3">
-             <label for="subject">
-              Subject * :
-              <input
-                required
-                placeholder="Ex :jeanDescartes@gmail.com"
-                type="text"
-                name="subject"
-                id=""
-              />
-            </label>
-              </div>
-              <div class="form-group mt-3">
-                                        <label for="message">
-                                            Message
-                                                <textarea class="form-control" name="message" rows="10" required></textarea>
-                                        </label>
-            
-              </div>
-              {/* <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div> */}
-              <div class="text-center"><input value='eenvoyer' type="submit" /></div>
-                                </form>
-                                
-          </div>
-
-        </div>
-
-      </div>
-                </section>
-                <div id="footer">
-                    <div className="container">
-                        <div className="row">
-                               <div class="col-lg-3 col-md-6 footer-contact">
-                        <h3>Ninestars</h3>
-                         <p> A108 Adam Street <br></br> New York, NY 535022 <br></br>
-              United States<br></br>
-              <strong>Phone:</strong> +1 5589 55488 55 <br></br>
-              <strong>Email:</strong> info@example.com <br></br>
-            </p>
-                            </div>
-                                 <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Useful Links</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Our Services</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Our Social Networks</h4>
-            <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
-            <div class="social-links mt-3">
-              <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-              <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-              <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-              <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-              <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-            </div>
-          </div>
-              </div>
-              <h1>Quelques suggestions d'amis</h1>
-              {
-                users.filter(el => {
-                  if (el.activite === user.activite) {
-                    return true
-                  }
-                }).slice(0,6)
-                  .map((el, index) => {
-                  return(
-                  <p>{el.nom}</p>)
-                })
-                       } 
-                    </div>
+           
+        </section>
+     
+      <h1 style={{fontSize:'1.8rem',textAlign:'center',padding:'15px'}}>Que voulez vous dire ?</h1>
+       
+        <FormPost />
+        <br></br>
+        <div className="name">
+           <div className="py-4">
+            <h1 className="mb-3">Publications</h1>
+                {
+                  // !isempty(allPosts[0]) &&
+              allPosts
+          // eslint-disable-next-line array-callback-return
+          ?.filter( el => {
+            if (el.activitePost?.toLocaleLowerCase().includes(user.activite?.toLocaleLowerCase())) {
+              return true
+            }
+          }).slice(0,count)
+          .map((el) => {
+          return (
+          <ListPost el={el}  />
+          )
+          })
+            }
+           
                 </div>
         </div>
-        <div>
-
-        </div>
-        </div>
+       
+        </>
+        
+        }
+      </>
     );
 };
 

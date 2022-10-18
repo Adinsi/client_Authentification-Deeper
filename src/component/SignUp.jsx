@@ -3,18 +3,20 @@ import axios from 'axios'
 
 import '../styles/componentstyles/SignUp.scss';
 import SignIn from './SignIn';
-import { useNavigate,NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import LoadingPage from './LoadingPage';
 const SignUp = (props) => {
   const [formSubmit, setFormSubmit] = useState(false);
   
      const [nom, Setnom] = useState('');
   const [prenom, Setprenom] = useState('');
-     const [groupe, Setgroupe] = useState('');
+     const [ville, Setville] = useState('');
   const [activite, Setactivite] = useState('');
   const [tel, SetTel] = useState('');
      const [email, Setemail] = useState('');
   const [password, Setpassword] = useState('');
-  const [controlPassword, setControlPassword] = useState("");
+
+ 
  
       const [eye, seteye] = useState(true);
   
@@ -30,35 +32,17 @@ const SignUp = (props) => {
     }
   };
   const sendRquest = async () => {
-    // const terms = document.getElementById("terms");
-    // const emailError = document.querySelector(".email.error");
-    
-   
-    // const passwordConfirmError = document.querySelector(
-    //   ".password-confirm.error");
-    // const termsError = document.querySelector(".terms.error");
-
-    // passwordConfirmError.innerHTML = "";
-    //    termsError.innerHTML = "";
-    //    emailError.innerHTML = ""
-    
-    
-    //   if (password !== controlPassword) {
-    //     passwordConfirmError.innerHTML =
-    //       "Les mots de passe ne correspondent pas";
-      
-    // } 
     
    const emailError = document.querySelector(".email.error");
     
  const res =  await axios
-            .post(`http://localhost:7500/api/user/register`,
+            .post(`${process.env.REACT_APP_URL_USER}register`,
                 
  {
          nom,
    prenom,
    email,
-   groupe,
+   ville,
    activite,
    tel,
    password
@@ -76,7 +60,8 @@ const SignUp = (props) => {
 }
      const handleSubmit = async (e) => {
     e.preventDefault();
-    
+        
+
        sendRquest().then(() => {
            setFormSubmit(true)
        });
@@ -87,7 +72,8 @@ const SignUp = (props) => {
      <>
         {
           formSubmit ? (
-          <>  
+            <>  
+           
           <SignIn/> 
            
           <span></span>
@@ -136,13 +122,15 @@ const SignUp = (props) => {
          </span>
         
                         <input className="form-input" name='email' id="email" type="email" placeholder="Votre email" onChange={(e) => Setemail(e.target.value)} value={email} required />
-                    <h3 className="email error"></h3>
+                    <h3 className="email error">
+
+                    </h3>
                       <br></br>
        <span className="input-item">
        <i class="fa-solid fa-church"></i>
          </span>
         
-         <input className="form-input" name='groupe' id="groupe" type="text" placeholder="Votre groupe"  onChange={(e) => Setgroupe(e.target.value)} value={groupe} required />
+         <input className="form-input" name='ville' id="ville" type="text" placeholder="Votre ville"  onChange={(e) => Setville(e.target.value)} value={ville} required />
                       <br></br>  <br></br>
                          <span className="input-item">
          <i class="fa-solid fa-briefcase"></i>
@@ -175,20 +163,7 @@ const SignUp = (props) => {
  
      
                         <br></br>  <br></br>
-                        {/* <span className="input-item">
-        <i className="fa fa-key"></i>
-                        </span>
-                       
-    
-      <input className="form-input" type="password" placeholder="confirmer votre mot de passe" id="password-conf"
-            onChange={(e) => setControlPassword(e.target.value)}
-                      name='password' 
-                    value={controlPassword} /> */}
-     
-
-     {/* <span>
-        <i  className={eye ? "fa-solid fa-eye": "fa-solid fa-eye-slash" }   aria-hidden="true"  type="button" id="eye"></i>
-     </span> */}
+          
      
                         <h3 className='password-confirm error'>
                             
@@ -196,13 +171,13 @@ const SignUp = (props) => {
                         
                          <p style={{color:'white'}} >   <input style={{width:"20px"}} type="checkbox" id="terms" required />
             J'accepte les{" "}
-            <NavLink to="/condition_generale" >
+            <NavLink style={{color:'white',fontWeight:'bolder',fontSize:'16px'}} to="/condition_generale" >
               conditions générales
             </NavLink>
           </p>
           <div className="terms error"></div>
           <br />
-      <button type='submit'  className="log-in"> S'inscrire </button>
+      <button type='submit'  className="log-in send"> S'inscrire </button>
    </div>
   
 

@@ -15,18 +15,19 @@ const Navbar = () => {
        <nav>
             <div className="container">
                 <div className="logo">
-                      <NavLink to='/home'> <img src='../assets/logo.jpg'  alt='Logo du site'/></NavLink>
-              
+                      {/* <NavLink to='/home'> <img src='../assets/logo.jpg'  alt='Logo du site'/></NavLink> */}
+                    <NavLink to='/home'><i style={{ padding: "0px 15px", fontSize: "25px", color: "white", cursor: "pointer" }} className="fa-solid fa-search"></i></NavLink>
+                    <span style={{color:'white'}}>SearchMeri</span>
                 </div>
                 <div className="links">
                     <ul className="menu">
                 
                         <li><NavLink to='/home' >
-<i style={{ padding: "0px 15px", fontSize: "25px", color: "white", cursor: "pointer" }} class="fa-solid fa-home"></i>
+<i style={{ padding: "0px 15px", fontSize: "25px", color: "white", cursor: "pointer" }} className="fa-solid fa-home"></i>
                         </NavLink></li>
-                        <li><NavLink to='/profil'><i style={{ padding: "0px 15px", fontSize: "25px", color: "white", cursor: "pointer" }} class="fa-solid fa-user"></i></NavLink></li>
-                        <li><NavLink to='/search'><i style={{ padding: "0px 15px", fontSize: "25px", color: "white", cursor: "pointer" }} class="fa-solid fa-search"></i></NavLink></li>
-                           <li><NavLink to='/help'><i   style={{padding:"0px 25px",fontSize:"35px",color:"white",cursor:"pointer"}} class="fa-solid fa-book"></i></NavLink></li>
+                        <li><NavLink to='/profil'><i style={{ padding: "0px 15px", fontSize: "25px", color: "white", cursor: "pointer" }} className="fa-solid fa-user"></i></NavLink></li>
+                        <li><NavLink to='/search'><i style={{ padding: "0px 15px", fontSize: "25px", color: "white", cursor: "pointer" }} className="fa-solid fa-search"></i></NavLink></li>
+                           {/* <li><NavLink to='/help'><i   style={{padding:"0px 25px",fontSize:"35px",color:"white",cursor:"pointer"}} className="fa-solid fa-book"></i></NavLink></li> */}
                        
                         {/* <li  ><NavLink to='/'>FR <i onClick={handleLanguage} onMouseEnter={handleLanguage} className="fa-solid fa-circle-chevron-down"></i></NavLink>  
                         </li> */}
